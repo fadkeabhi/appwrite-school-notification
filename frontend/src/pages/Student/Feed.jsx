@@ -12,7 +12,7 @@ function FeedElement(props) {
             <div className='flex-1 text-white text-lg flex flex-col p-4 rounded-md'>
                 <p className='font-bold text-[#394867] text-center flex-1 flex flex-col bg-white m-2 rounded-lg'>{props.feed.title}</p>
                 <p>{props.feed.content}</p>
-                {format(props.feed.createdAt)}
+                {format(props.feed.$createdAt)}
             </div>
         </div>
     )

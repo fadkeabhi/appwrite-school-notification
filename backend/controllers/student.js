@@ -155,10 +155,12 @@ async function updateClassS(email, clas) {
     if (isSuccess) {
         const { addToTopic, removeFromTopic } = require('./novu')
         let tmp = 'parent_' + clas
+        
         //student
         if (old) {
+            let tmpold = 'parent_' + old.class
             await removeFromTopic(email, old.class)
-            await removeFromTopic(old.parentEmail, tmp)
+            await removeFromTopic(old.parentEmail, tmpold)
             console.log("old found")
         }
         await addToTopic(email, clas)

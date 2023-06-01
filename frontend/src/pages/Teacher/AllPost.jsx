@@ -25,7 +25,7 @@ function AllPost() {
                 <p>{pos.content}</p>
               </div>
               <div className='flex items-end justify-center'>
-                <p className=''>{format(pos.createdAt)}</p>
+                <p className=''>{format(pos.$createdAt)}</p>
               </div>
             </div>
           ))
