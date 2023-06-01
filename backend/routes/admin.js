@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/teachers/:clas', async (req, res) => {
-    if (req.session.role === 'admin' || true) {
+    if (req.session.role === 'admin' ) {
         const { getAllTByClas } = require('../controllers/teacher')
         res.json(await getAllTByClas(req.params.clas))
     }
@@ -23,7 +23,7 @@ router.get('/teachers', async (req, res) => {
 });
 
 router.post('/teacher/create', async (req, res) => {
-    if (req.session.role === 'admin' || true) {
+    if (req.session.role === 'admin' ) {
         if (req.body.email &&
             req.body.fName &&
             req.body.lName &&
@@ -143,7 +143,7 @@ router.post('/teacher/class/remove', async (req, res) => {
 })
 
 router.post('/class/create', async (req, res) => {
-    if (req.session.role === 'admin' || true) {
+    if (req.session.role === 'admin' ) {
         if (req.body.clas) {
             const { createClas } = require('../controllers/class')
             const createdOrNot = await createClas(req.body.clas)
@@ -166,7 +166,7 @@ router.post('/class/create', async (req, res) => {
 })
 
 router.get('/class', async (req, res) => {
-    if (req.session.role === 'admin' || true) {
+    if (req.session.role === 'admin' ) {
         const { getAllC } = require('../controllers/class')
         res.json(await getAllC())
     }
