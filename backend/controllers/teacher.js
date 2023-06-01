@@ -1,5 +1,6 @@
-const sdk = require('node-appwrite');
+const teacher = require('../models/teacher')
 
+const sdk = require('node-appwrite');
 
 // Init SDK
 const client = new sdk.Client();
@@ -10,10 +11,11 @@ client
     .setProject(process.env.APPWRITE_PROJECT) // Your project ID
     .setKey(process.env.APPWRITE_KEY) // Your secret API key
 
-
+//appwrite
 async function createTeacher(email, fName, lName, phone) {
+    let email2 = email.replace(/[^a-zA-Z0-9]/g , '_')
     let createdOrNot
-    await databases.createDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER, email.replace(/[^a-zA-Z0-9 ]/g), {
+    await databases.createDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER, email2, {
         email: email,
         fName: fName,
         lName: lName,
@@ -46,22 +48,25 @@ async function updateTeacher(email, fName, lName, phone) {
     return docs
 }
 
+//appwrite
 async function findByEmailT(email) {
-    const docs = await teacher.findOne({ email: email })
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER,[sdk.Query.equal("email", [email])])
         .catch((err) => {
             console.log(err)
         })
 
-    return docs
+    return docs?.documents[0]
 
 }
 
+//appwrite
 async function getAllT() {
-    const docs = await teacher.find({})
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER)
         .catch((err) => {
             console.log(err)
         })
-    return docs
+
+    return docs?.documents
 }
 
 async function pushClas(email, clas) {

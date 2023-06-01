@@ -1,9 +1,20 @@
 const clasM = require('../models/clas')
 
+const sdk = require('node-appwrite');
+const client = new sdk.Client();
+const databases = new sdk.Databases(client);
+client
+    .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject(process.env.APPWRITE_PROJECT) // Your project ID
+    .setKey(process.env.APPWRITE_KEY) // Your secret API key
+
+//moved all to appwrite database
+
+
 async function checkClasExist(clas) {
-    const docs = await clasM.findOne({ class: clas })
-    if (docs) {
-        return docs;
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_CLASS,[sdk.Query.equal("class", [clas])])
+    if (docs?.documents[0]) {
+        return docs?.documents[0];
     }
     else {
         return false
@@ -12,12 +23,13 @@ async function checkClasExist(clas) {
 
 async function createClas(clas) {
     //check if class exist
+    let clas2 = clas.replace(/[^a-zA-Z0-9]/g , '_')
     let createdOrNot
     if (await checkClasExist(clas)) {
         createdOrNot = true
     }
     else {
-        await clasM.create({
+        await databases.createDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_CLASS, clas2 , {
             class:clas
         })
             .then(() => {
@@ -33,18 +45,27 @@ async function createClas(clas) {
             const { createTopic } = require('./novu')
             createTopic(clas)
         }
+        console.log(createdOrNot)
         return createdOrNot
     }
 }
 
 
 async function getAllC(){
-    const docs = await clasM.find({})
+    // databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_CLASS,[sdk.Query.equal("class", ["test"])])
+    let docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_CLASS)
     .catch((err) => {
         console.log(err)
     })
-    return docs
+    //filtering unnessesary fields, as select query not working
+    return docs.documents
+    
+    // const docs2 = await clasM.find({})
+    // .catch((err) => {
+    //     console.log(err)
+    // })
+    // console.log(docs2)
+    // return docs2
 }
-
 
 module.exports = { createClas,checkClasExist,getAllC }
