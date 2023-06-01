@@ -9,7 +9,7 @@ client
     .setProject(process.env.APPWRITE_PROJECT) // Your project ID
     .setKey(process.env.APPWRITE_KEY) // Your secret API key
 
-//appwrite
+
 async function createTeacher(email, fName, lName, phone) {
     let email2 = email.replace(/[^a-zA-Z0-9]/g , '_')
     let createdOrNot
@@ -30,23 +30,24 @@ async function createTeacher(email, fName, lName, phone) {
 }
 
 async function updateTeacher(email, fName, lName, phone) {
+    let email2 = email.replace(/[^a-zA-Z0-9]/g , '_')
     let docs
-    await teacher.updateOne({ email: email },
-        {
-            fName: fName,
-            lName: lName,
-            phone: phone,
-        })
-        .then((e) => {
-            docs = e
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    await databases.updateDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER, email2, {
+        fName: fName,
+        lName: lName,
+        phone: phone
+    })
+    .then((e) => {
+        docs = e
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
     return docs
 }
 
-//appwrite
+
 async function findByEmailT(email) {
     const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER,[sdk.Query.equal("email", [email])])
         .catch((err) => {
@@ -57,7 +58,7 @@ async function findByEmailT(email) {
 
 }
 
-//appwrite
+
 async function getAllT() {
     const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER)
         .catch((err) => {
@@ -67,7 +68,7 @@ async function getAllT() {
     return docs?.documents
 }
 
-//appwrite
+
 async function pushClas(email, clas) {
     let isSuccess
     let doc = await findByEmailT(email)
@@ -91,7 +92,7 @@ async function pushClas(email, clas) {
     return isSuccess
 }
 
-//appwrite
+
 async function pullClas(email, clas) {
     let isSuccess = false
     let doc = await findByEmailT(email)
@@ -119,7 +120,7 @@ async function pullClas(email, clas) {
 
 
 
-//appwrite
+
 async function getAllTByClas(clas) {
     let ret = []
     const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER)

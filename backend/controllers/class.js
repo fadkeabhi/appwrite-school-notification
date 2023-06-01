@@ -1,3 +1,5 @@
+//moved all to appwrite database
+
 const clasM = require('../models/clas')
 
 const sdk = require('node-appwrite');
@@ -7,8 +9,6 @@ client
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
     .setProject(process.env.APPWRITE_PROJECT) // Your project ID
     .setKey(process.env.APPWRITE_KEY) // Your secret API key
-
-//moved all to appwrite database
 
 
 async function checkClasExist(clas) {

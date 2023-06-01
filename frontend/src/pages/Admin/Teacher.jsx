@@ -30,7 +30,7 @@ function Teacher() {
                 {
                     teachersDetails.map((teacher)=>(
                         <div className='flex bg-[#394867] drop-shadow-lg rounded-md'>
-                            <div key={teacher._id} className='flex-1 text-white text-lg font-semibold flex flex-col p-4 rounded-md'>
+                            <div key={teacher.$id} className='flex-1 text-white text-lg font-semibold flex flex-col p-4 rounded-md'>
                                 <p>{teacher.email}</p>
                                 <p>{`${teacher.fName} ${teacher.lName}`}</p>
                                 <p>{teacher.phone}</p>
@@ -44,7 +44,7 @@ function Teacher() {
                             </div>
                             <button
                              onClick={()=>{
-                                navigate(`/admin/teacher/edit?id=${teacher._id}&email=${teacher.email}`)
+                                navigate(`/admin/teacher/edit?id=${teacher.$id}&email=${teacher.email}`)
                             }} className='flex drop-shadow-lg items-center justify-center px-5 text-black '>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 rounded-md h-10 p-1 bg-white">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />

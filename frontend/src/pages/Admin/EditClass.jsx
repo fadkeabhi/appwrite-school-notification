@@ -83,7 +83,7 @@ function StudentsComponent(props) {
             {
                 students.map((student) => (
                     <div className='flex bg-[#394867] rounded-md'>
-                        <StudentComponent key={student._id} data={student} clas={props.clas} className='flex-1 text-white text-lg font-semibold flex flex-col p-4 rounded-md' />
+                        <StudentComponent key={student.$id} data={student} clas={props.clas} className='flex-1 text-white text-lg font-semibold flex flex-col p-4 rounded-md' />
                     </div>
                 ))
             }
@@ -97,7 +97,7 @@ function TeacherComponent(props) {
     const [clas, setClas] = useState('');
     //set initial status
     useEffect(() => {
-        if (props.data.class.includes(props.clas)) {
+        if (props?.data?.class?.includes(props.clas)) {
             setChecked(true)
         }
         setEmail(props.data.email)
@@ -156,7 +156,7 @@ function EditClass() {
     const id = searchParams.get('id');
     const getCData = async () => {
         const { data } = await instance.get(`${getClassRoute}`);
-        const result = data.find(({ _id }) => _id === id);
+        const result = data.find(({ $id }) => $id === id);
         return result;
     }
 
@@ -191,7 +191,7 @@ function EditClass() {
                         {
                             teachers.map((teacher) => (
                                 <div className='flex bg-[#394867] rounded-md'>
-                                    <TeacherComponent key={teacher._id} data={teacher} clas={clas} className='flex-1 text-white text-lg font-semibold flex flex-col p-4 rounded-md' />
+                                    <TeacherComponent key={teacher.$id} data={teacher} clas={clas} className='flex-1 text-white text-lg font-semibold flex flex-col p-4 rounded-md' />
                                 </div>
                             ))
                         }

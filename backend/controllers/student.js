@@ -1,5 +1,14 @@
 const student = require('../models/student')
 
+const sdk = require('node-appwrite');
+const client = new sdk.Client();
+const databases = new sdk.Databases(client);
+
+client
+    .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject(process.env.APPWRITE_PROJECT) // Your project ID
+    .setKey(process.env.APPWRITE_KEY) // Your secret API key
+
 async function createStudent(email,
     parentEmail,
     fName,
@@ -18,7 +27,8 @@ async function createStudent(email,
         createdOrNot = false
     }
     else {
-        await student.create({
+        let email2 = email.replace(/[^a-zA-Z0-9]/g, '_')
+        await databases.createDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT, email2, {
             email: email,
             parentEmail: parentEmail,
             fName: fName,
@@ -62,14 +72,14 @@ async function updateStudent(email,
     pPhone) {
 
     let docs
-    await student.updateOne({ email: email },
-        {
-            fName: fName,
-            pName: pName,
-            lName: lName,
-            sPhone: sPhone,
-            pPhone: pPhone
-        })
+    let email2 = email.replace(/[^a-zA-Z0-9]/g, '_')
+    await databases.updateDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT, email2, {
+        fName: fName,
+        pName: pName,
+        lName: lName,
+        sPhone: sPhone,
+        pPhone: pPhone
+    })
         .then((e) => {
             docs = e
         })
@@ -81,35 +91,35 @@ async function updateStudent(email,
 }
 
 async function findByEmailS(email) {
-    const docs = await student.findOne({ email: email })
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT, [sdk.Query.equal("email", [email])])
         .catch((err) => {
             console.log(err)
         })
-    return docs
+    return docs?.documents[0]
 }
 
 async function findByEmailP(email) {
-    const docs = await student.findOne({ parentEmail: email })
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT, [sdk.Query.equal("parentEmail", [email])])
         .catch((err) => {
             console.log(err)
         })
-    return docs
+    return docs?.documents[0]
 }
 
 async function getAllSByClas(clas) {
-    const docs = await student.find({ class: clas })
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT, [sdk.Query.equal("class", [clas])])
         .catch((err) => {
             console.log(err)
         })
-    return docs
+    return docs?.documents
 }
 
 async function getAllS() {
-    const docs = await student.find({})
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT)
         .catch((err) => {
             console.log(err)
         })
-    return docs
+    return docs?.documents
 }
 
 async function updateClassS(email, clas) {
@@ -121,7 +131,10 @@ async function updateClassS(email, clas) {
         old = await findByEmailS(email)
 
         //update class
-        const result = await student.updateOne({ email: email }, { class: clas })
+        let email2 = email.replace(/[^a-zA-Z0-9]/g, '_')
+        const result = await databases.updateDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT, email2, {
+            class: clas
+        })
             .catch((err) => {
                 console.log(err)
                 isSuccess = false
@@ -164,7 +177,10 @@ async function removeClassS(email) {
     const { checkClasExist } = require('./class')
     //get old class
     old = await findByEmailS(email)
-    const result = await student.updateOne({ email: email }, { class: '' })
+    let email2 = email.replace(/[^a-zA-Z0-9]/g, '_')
+    const result = await databases.updateDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_STUDENT, email2, {
+        class: ''
+    })
         .catch((err) => {
             console.log(err)
             isSuccess = false

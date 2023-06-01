@@ -14,7 +14,7 @@ function EditTeacher() {
     const id = searchParams.get('id');
     const getData = async() => {
         const {data} = await instance.get(`${getTeacherRoute}`);
-        const result = data.find(({ _id }) => _id === id);
+        const result = data.find(({ $id }) => $id === id);
         return result;
     }
     const FormSubmitHandler = (e) =>{

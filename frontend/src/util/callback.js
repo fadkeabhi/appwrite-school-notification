@@ -33,13 +33,16 @@ function Callback() {
                     .then((e) => {
                         console.log(e.data)
                         if (e.data.role === 'admin') {
-                            navigate("/admin/teacher/create");
+                            navigate("/admin");
                         }
                         else if (e.data.role === 'teacher') {
                             navigate("/teacher");
                         }
                         else if (e.data.role === 'student' || e.data.role === 'parent') {
                             navigate("/dash");
+                        }
+                        else{
+                            navigate("/");
                         }
                     })
                     .catch((err) => {
