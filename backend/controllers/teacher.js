@@ -1,7 +1,5 @@
-const teacher = require('../models/teacher')
-
+//moved all to appwrite
 const sdk = require('node-appwrite');
-
 // Init SDK
 const client = new sdk.Client();
 const databases = new sdk.Databases(client);
@@ -69,56 +67,71 @@ async function getAllT() {
     return docs?.documents
 }
 
+//appwrite
 async function pushClas(email, clas) {
     let isSuccess
-    await teacher.findOne({ email: email })
+    let doc = await findByEmailT(email)
+    if(!doc){
+        isSuccess = false
+    }
+    else if(doc.class.includes(clas)){
+        isSuccess = true
+    }
+    else{
+        //add class to doc
+        doc.class.push(clas)
+        await databases.updateDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER, doc.$id, {class : doc.class})
+        .then((e) => {
+            isSuccess = true
+        })
         .catch((err) => {
             console.log(err)
-            isSuccess = false
         })
-        .then((e) => {
-            if (e.class.includes(clas)) {
-                isSuccess = true
-            }
-            else {
-                e.class.push(clas)
-                const result = e.save()
-                if (result) {
-                    isSuccess = true
-                }
-            }
-        })
+    }
     return isSuccess
 }
 
+//appwrite
 async function pullClas(email, clas) {
-    let isSuccess
-    await teacher.findOne({ email: email })
+    let isSuccess = false
+    let doc = await findByEmailT(email)
+    if(!doc){
+        isSuccess = false
+    }
+    else if(!doc.class.includes(clas)){
+        isSuccess = true
+    }
+    else{
+        //add class to doc
+        // doc.class.pull(clas)
+        doc.class.splice(doc.class.findIndex(a => a === clas) , 1)
+        await databases.updateDocument(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER, doc.$id, {class : doc.class})
+        .then((e) => {
+            isSuccess = true
+        })
         .catch((err) => {
             console.log(err)
-            isSuccess = false
         })
-        .then((e) => {
-            if (e.class.includes(clas)) {
-                e.class.pull(clas)
-                const result = e.save()
-                if (result) {
-                    isSuccess = true
-                }
-            }
-            else {
-                isSuccess = true
-            }
-        })
+    }
+    console.log(isSuccess)
     return isSuccess
 }
 
+
+
+//appwrite
 async function getAllTByClas(clas) {
-    const docs = await teacher.find({ class: clas })
+    let ret = []
+    const docs = await databases.listDocuments(process.env.DATABASE_ID, process.env.COLLECTION_ID_TEACHER)
         .catch((err) => {
             console.log(err)
         })
-    return docs
+    for(let i = 0; i<docs.total; i++){
+        if(docs.documents[i].class.includes(clas)){
+            ret.push(docs.documents[i])
+        }
+    }
+    return ret
 }
 
 module.exports = { pushClas, getAllTByClas, pullClas, createTeacher, updateTeacher, findByEmailT, getAllT }

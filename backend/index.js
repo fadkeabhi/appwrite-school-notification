@@ -23,6 +23,10 @@ const clas = require('./models/clas')
 const teacher = require('./models/teacher')
 const feed = require('./models/feed')
 
+//testing appwrite functions
+// const {pullClas} = require('./controllers/teacher')
+// pullClas("email","a")
+
 //testing novu
 const novu = require('./controllers/novu')
 
