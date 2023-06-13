@@ -1,10 +1,16 @@
-CLIENT_ID=
-CLIENT_SECRET=
-DATABASE_URL=mongodb://0.0.0.0:27017/schoolNotification
 frontend_url=http://localhost:3000/
 frontend_url_admin=http://localhost:3000/admin/
 student_url=http://localhost:3000/dash/
-adminMail1=fadkeabhi@gmail.com1
-adminMail2=admin2@gmail.com
+frontend_url_teach=http://localhost:3000/teacher/
+adminMail1=
+adminMail2=
 NOVU_API_KEY=
 random=
+#appwrite specific
+APPWRITE_KEY=
+APPWRITE_PROJECT=
+DATABASE_ID=
+COLLECTION_ID_TEACHER=
+COLLECTION_ID_CLASS=
+COLLECTION_ID_FEED=
+COLLECTION_ID_STUDENT=
