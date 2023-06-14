@@ -2,7 +2,7 @@
 
 ## Team Details
 
-- Name of Team Member 1 - @teammember1
+- Siddharth Bramhecha - @teammember1
 - ABHISHEK FADAKE - @fadkeabhi
 
 ## Description of Project
