@@ -62,4 +62,36 @@ We used the appwrite Database to store our documents.
 https://github.com/fadkeabhi/appwrite-school-notification
 
 ## Screenshoot
-
+<br/>
+Login Page:
+<img width="500" alt="Login Page" src="./screenshots/LogIn.png">
+<br/>
+Admin Dashbord:
+<img width="500" alt="Admin Dashbord" src="./screenshots/AdminDashbord.png">
+<br/>
+Admin Dashbord All Teachers List:
+<img width="500" alt="Admin Dashbord All Teachers List" src="./screenshots/AdminDashbordTeachers.png">
+<br/>
+Admin Dashbord Create New Teacher:
+<img width="500" alt="Admin Dashbord Create New Teacher" src="./screenshots/AdminDashbordTeacherAdd.png">
+<br/>
+Admin Dashbord Update Teacher:
+<img width="500" alt="Admin Dashbord Update Teacher" src="./screenshots/AdminDashbordTeacherUpdate.png">
+<br/>
+Admin Dashbord Update Class:
+<img width="500" alt="Admin Dashbord Update Class" src="./screenshots/AdminDashbordClassUpdate.png">
+<br/>
+Admin Dashbord Update Student:
+<img width="500" alt="Admin Dashbord Update Student" src="./screenshots/AdminDashbordStudentUpdate.png">
+<br/>
+Teacher Dashboard:
+<img width="500" alt="Teacher Dashboard" src="./screenshots/TeacherDashboard.png">
+<br/>
+Teacher Dashboard Post Create:
+<img width="500" alt="Teacher Dashboard Post Create" src="./screenshots/TeacherDashboardPostCreate.png">
+<br/>
+student Dashboard:
+<img width="500" alt="student Dashboard" src="./screenshots/studentDashboard.png">
+<br/>
+Student Dashboard In-App Notification:
+<img width="500" alt="Student Dashboard In App Notification" src="./screenshots/StudentDashboardInAppNotification.png">
