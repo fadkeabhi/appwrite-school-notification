@@ -26,7 +26,6 @@ It aims to In-app and email notifications ensure timely updates. This system str
 
 ## Tech Stack
 
-
 - Appwrite Cloud
     - Authentication
     - Database
